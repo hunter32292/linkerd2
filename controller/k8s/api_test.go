@@ -58,8 +58,8 @@ func newMockAPI(useInformer bool, res resources) (
 	}
 
 	if useInformer {
-		api.Sync(nil)
-		metadataAPI.Sync(nil)
+		api.Sync(nil, 60)
+		metadataAPI.Sync(nil, 60)
 	}
 
 	return api, metadataAPI, k8sResults, nil

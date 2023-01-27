@@ -25,6 +25,7 @@ func main() {
 	clusterDomain := cmd.String("cluster-domain", "cluster.local", "kubernetes cluster domain")
 	linkerdNamespace := cmd.String("linkerd-namespace", "linkerd", "namespace in which Linkerd control-plane is installed")
 	enablePprof := cmd.Bool("enable-pprof", false, "Enable pprof endpoints on the admin server")
+	cacheTimeout := cmd.Int("cache-sync", 60, "timeout on kubernetes api server go-client cache sync")
 
 	flags.ConfigureAndParse(cmd, os.Args[1:])
 
@@ -37,5 +38,6 @@ func main() {
 		*addr,
 		*kubeconfig,
 		*enablePprof,
+    cacheTimeout,
 	)
 }

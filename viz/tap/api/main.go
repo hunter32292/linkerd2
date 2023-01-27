@@ -27,7 +27,7 @@ func Main(args []string) {
 	disableCommonNames := cmd.Bool("disable-common-names", false, "disable checks for Common Names (for development)")
 	trustDomain := cmd.String("identity-trust-domain", defaultDomain, "configures the name suffix used for identities")
 	enablePprof := cmd.Bool("enable-pprof", false, "Enable pprof endpoints on the admin server")
-
+  cacheTimeout := cmd.Int("cache-sync", 60, "timeout on kubernetes api server go-client cache sync")
 	traceCollector := flags.AddTraceFlags(cmd)
 	flags.ConfigureAndParse(cmd, args)
 
@@ -77,7 +77,7 @@ func Main(args []string) {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	k8sAPI.Sync(nil)
+	k8sAPI.Sync(nil, cacheTimeout)
 	go apiServer.Start(ctx)
 
 	ready = true

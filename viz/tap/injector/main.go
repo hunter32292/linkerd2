@@ -18,6 +18,7 @@ func Main(args []string) {
 	kubeconfig := cmd.String("kubeconfig", "", "path to kubeconfig")
 	tapSvcName := cmd.String("tap-service-name", "", "name of the tap service")
 	enablePprof := cmd.Bool("enable-pprof", false, "Enable pprof endpoints on the admin server")
+	cacheTimeout := cmd.Int("cache-sync", 60, "timeout on kubernetes api server go-client cache sync")
 	flags.ConfigureAndParse(cmd, args)
 	webhook.Launch(
 		context.Background(),
@@ -28,5 +29,6 @@ func Main(args []string) {
 		*addr,
 		*kubeconfig,
 		*enablePprof,
+    cacheTimeout,
 	)
 }

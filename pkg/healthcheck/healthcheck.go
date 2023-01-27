@@ -2370,7 +2370,7 @@ func (hc *HealthChecker) checkMisconfiguredOpaquePortAnnotations(ctx context.Con
 	// and use the caching logic in the shared informers
 	// TODO: move the shared informer code out of `controller/`, and into `pkg` to simplify the dependency tree.
 	kubeAPI := controllerK8s.NewClusterScopedAPI(hc.kubeAPI, nil, nil, controllerK8s.Endpoint, controllerK8s.Pod, controllerK8s.Svc)
-	kubeAPI.Sync(ctx.Done())
+	kubeAPI.Sync(ctx.Done(), 60)
 
 	services, err := kubeAPI.Svc().Lister().Services(hc.DataPlaneNamespace).List(labels.Everything())
 	if err != nil {

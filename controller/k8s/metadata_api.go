@@ -84,10 +84,10 @@ func newClusterScopedMetadataAPI(
 }
 
 // Sync waits for all informers to be synced.
-func (api *MetadataAPI) Sync(stopCh <-chan struct{}) {
+func (api *MetadataAPI) Sync(stopCh <-chan struct{}, cacheTimeout int32) {
 	api.sharedInformers.Start(stopCh)
 
-	waitForCacheSync(api.syncChecks)
+	waitForCacheSync(api.syncChecks, cacheTimeout)
 }
 
 func (api *MetadataAPI) getLister(res APIResource) (cache.GenericLister, error) {

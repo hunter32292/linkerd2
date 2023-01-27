@@ -20,6 +20,7 @@ func Main(args []string) {
 	linkerdNamespace := cmd.String("linkerd-namespace", "linkerd", "control plane namespace")
 	enablePprof := cmd.Bool("enable-pprof", false, "Enable pprof endpoints on the admin server")
 	flags.ConfigureAndParse(cmd, args)
+	cacheTimeout := cmd.Int("cache-sync", 60, "timeout on kubernetes api server go-client cache sync")
 
 	webhook.Launch(
 		context.Background(),
@@ -30,5 +31,6 @@ func Main(args []string) {
 		*addr,
 		*kubeconfig,
 		*enablePprof,
+    cacheTimeout,
 	)
 }

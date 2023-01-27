@@ -271,7 +271,7 @@ func newAPI(
 }
 
 // Sync waits for all informers to be synced.
-func (api *API) Sync(stopCh <-chan struct{}, cacheTimeout int) {
+func (api *API) Sync(stopCh <-chan struct{}, cacheTimeout int32) {
 	api.sharedInformers.Start(stopCh)
 
 	if api.l5dCrdSharedInformers != nil {

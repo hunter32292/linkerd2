@@ -13,8 +13,8 @@ import (
 
 const resyncTime = 10 * time.Minute
 
-func waitForCacheSync(syncChecks []cache.InformerSynced, cacheTimeout int) {
-	ctx, cancel := context.WithTimeout(context.Background(), cacheTimeout*time.Second)
+func waitForCacheSync(syncChecks []cache.InformerSynced, cacheTimeout int32) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(cacheTimeout*int32(time.Second)))
 	defer cancel()
 
 	log.Infof("waiting for caches to sync")

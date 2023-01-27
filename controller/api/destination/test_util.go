@@ -398,7 +398,7 @@ spec:
 
 	// Sync after creating watchers so that the the indexers added get updated
 	// properly
-	k8sAPI.Sync(nil)
+	k8sAPI.Sync(nil, 60)
 
 	return &server{
 		pb.UnimplementedDestinationServer{},
@@ -480,7 +480,7 @@ metadata:
 	if err != nil {
 		t.Fatalf("NewFakeAPI returned an error: %s", err)
 	}
-	k8sAPI.Sync(nil)
+	k8sAPI.Sync(nil, 60)
 
 	mockGetServer := &mockDestinationGetServer{updatesReceived: []*pb.Update{}}
 	translator := newEndpointTranslator(

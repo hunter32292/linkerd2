@@ -23,6 +23,7 @@ func Launch(
 	addr string,
 	kubeconfig string,
 	enablePprof bool,
+  cacheTimeout int32,
 ) {
 	ready := false
 	adminServer := admin.NewServer(metricsAddr, enablePprof, &ready)
@@ -64,8 +65,7 @@ func Launch(
 
 	go s.Start()
 
-	metadataAPI.Sync(nil)
-
+	metadataAPI.Sync(nil, cacheTimeout)
 	ready = true
 
 	<-stop

@@ -779,7 +779,7 @@ func (rcsw *RemoteClusterServiceWatcher) processEvents(ctx context.Context) {
 
 // Start starts watching the remote cluster
 func (rcsw *RemoteClusterServiceWatcher) Start(ctx context.Context) error {
-	rcsw.remoteAPIClient.Sync(rcsw.stopper)
+	rcsw.remoteAPIClient.Sync(rcsw.stopper, 60)
 	rcsw.eventsQueue.Add(&OrphanedServicesGcTriggered{})
 	_, err := rcsw.remoteAPIClient.Svc().Informer().AddEventHandler(
 		cache.ResourceEventHandlerFuncs{

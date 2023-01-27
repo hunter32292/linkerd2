@@ -51,8 +51,8 @@ func (te *testEnvironment) runEnvironment(watcherQueue workqueue.RateLimitingInt
 	if err != nil {
 		return nil, err
 	}
-	remoteAPI.Sync(nil)
-	localAPI.Sync(nil)
+	remoteAPI.Sync(nil,60)
+	localAPI.Sync(nil,60)
 
 	watcher := RemoteClusterServiceWatcher{
 		link:                    &te.link,
@@ -74,8 +74,8 @@ func (te *testEnvironment) runEnvironment(watcherQueue workqueue.RateLimitingInt
 		watcher.processNextEvent(context.Background())
 	}
 
-	localAPI.Sync(nil)
-	remoteAPI.Sync(nil)
+	localAPI.Sync(nil,60)
+	remoteAPI.Sync(nil,60)
 
 	return localAPI, nil
 }
