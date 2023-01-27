@@ -33,6 +33,8 @@ func Main(args []string) {
 	defaultOpaquePorts := cmd.String("default-opaque-ports", "", "configures the default opaque ports")
 	enablePprof := cmd.Bool("enable-pprof", false, "Enable pprof endpoints on the admin server")
 
+	cacheTimeout := cmd.Int("cache-sync", 60, "timeout on kubernetes api server go-client cache sync")
+
 	traceCollector := flags.AddTraceFlags(cmd)
 
 	flags.ConfigureAndParse(cmd, args)
@@ -130,7 +132,7 @@ func Main(args []string) {
 		log.Fatalf("Failed to initialize destination server: %s", err)
 	}
 
-	k8sAPI.Sync(nil) // blocks until caches are synced
+	k8sAPI.Sync(nil, cacheTimeout) // blocks until caches are synced
 
 	go func() {
 		log.Infof("starting gRPC server on %s", *addr)

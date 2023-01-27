@@ -271,14 +271,14 @@ func newAPI(
 }
 
 // Sync waits for all informers to be synced.
-func (api *API) Sync(stopCh <-chan struct{}) {
+func (api *API) Sync(stopCh <-chan struct{}, cacheTimeout int) {
 	api.sharedInformers.Start(stopCh)
 
 	if api.l5dCrdSharedInformers != nil {
 		api.l5dCrdSharedInformers.Start(stopCh)
 	}
 
-	waitForCacheSync(api.syncChecks)
+	waitForCacheSync(api.syncChecks, cacheTimeout)
 }
 
 // NS provides access to a shared informer and lister for Namespaces.
